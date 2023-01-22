@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+  main:
+    build: .
+    image: practica_visualitzacio_image
+    container_name: practica_visualitzacio_container
+    environment:
+      - JUPYTER_TOKEN=1234
+    working_dir: /notebooks
+    volumes:
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - /etc/shadow:/etc/shadow:ro
+      - ./fitxers:/notebooks
+    ports:
+      - 8888:8888
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
